@@ -11,14 +11,14 @@ void prueba_simple()
 }
 void prueba_creacion_destruccion_lista()
 {
-	printf(CYAN "CREAR/DESTRUIR LISTA");
+	printf(CYAN "CREAR/DESTRUIR LISTA \n");
 	Lista *lista = lista_crear();
 	pa2m_afirmar(lista != NULL, "La lista no es nula");
 	lista_destruir(lista);
 }
 void prueba_insertar_elemento()
 {
-	printf(CYAN "INSERTAR ELEMENTO");
+	printf(CYAN "INSERTAR ELEMENTO \n");
 	Lista *lista = lista_crear();
 	pa2m_afirmar(lista != NULL, "La lista no es nula");
 	int algo = 5;
