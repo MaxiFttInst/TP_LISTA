@@ -47,7 +47,7 @@ void lista_destruir_todo(Lista *lista, void (*destructor)(void *))
 	while (nodo_actual != NULL) {
 		nodo_a_borrar = nodo_actual;
 		nodo_actual = nodo_a_borrar->siguiente;
-		if(destructor != NULL)
+		if (destructor != NULL)
 			destructor(nodo_a_borrar->dato);
 		free(nodo_a_borrar);
 	}
@@ -60,7 +60,7 @@ void lista_destruir_todo(Lista *lista, void (*destructor)(void *))
  */
 size_t lista_cantidad_elementos(Lista *lista)
 {
-	if(lista == NULL)
+	if (lista == NULL)
 		return 0;
 	return lista->cantidad;
 }
@@ -75,7 +75,7 @@ size_t lista_cantidad_elementos(Lista *lista)
  */
 bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 {
-	if(lista == NULL)
+	if (lista == NULL)
 		return false;
 	if (posicion > lista->cantidad)
 		return false;
@@ -83,7 +83,7 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 	Nodo *nodo_actual = lista->principio;
 	Nodo *nodo_aux = NULL;
 	bool resultado = false;
-	if(posicion == 0 && lista->cantidad > 0){
+	if (posicion == 0 && lista->cantidad > 0) {
 		Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
 		nuevo_nodo->dato = cosa;
 		nodo_aux = nodo_actual;
@@ -91,8 +91,7 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 		lista->principio = nuevo_nodo;
 		resultado = true;
 		lista->cantidad++;
-	}
-	else if(posicion == lista->cantidad){
+	} else if (posicion == lista->cantidad) {
 		resultado = lista_agregar_al_final(lista, cosa);
 	} else {
 		nodo_actual = lista->principio;
@@ -100,7 +99,7 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 		Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
 		if (nuevo_nodo == NULL)
 			return false;
-		for(int i = 0; i < posicion-1; i++){
+		for (int i = 0; i < posicion - 1; i++) {
 			nodo_actual = nodo_actual->siguiente;
 		}
 		nodo_aux = nodo_actual->siguiente;
@@ -118,7 +117,7 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
   */
 bool lista_agregar_al_final(Lista *lista, void *cosa)
 {
-	if(lista == NULL)
+	if (lista == NULL)
 		return false;
 
 	Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
@@ -128,7 +127,7 @@ bool lista_agregar_al_final(Lista *lista, void *cosa)
 	Nodo *nodo_anterior = NULL;
 
 	nuevo_nodo->dato = cosa;
-	if(lista->cantidad == 0){
+	if (lista->cantidad == 0) {
 		lista->principio = nuevo_nodo;
 		lista->final = nuevo_nodo;
 	} else {
@@ -150,18 +149,20 @@ bool lista_agregar_al_final(Lista *lista, void *cosa)
 bool lista_quitar_elemento(Lista *lista, size_t posicion,
 			   void **elemento_quitado)
 {
-	if(lista == NULL)
+	if (lista == NULL)
 		return false;
-	if(lista->cantidad == 0)
+	if (lista->cantidad == 0)
 		return false;
 
-	// Nodo *nodo_actual = NULL;
+	Nodo *nodo_a_borrar = NULL;
 	// Nodo *nodo_aux = NULL;
 	bool resultado = false;
-	if(posicion == 0){
-		*elemento_quitado = lista->principio->dato;	
+	if (posicion == 0) {
+		*elemento_quitado = lista->principio->dato;
+		nodo_a_borrar = lista->principio;
 		lista->principio = lista->principio->siguiente;
-		resultado = true;	
+		free(nodo_a_borrar);
+		resultado = true;
 	}
 	lista->cantidad--;
 	return resultado;
@@ -181,7 +182,7 @@ void *lista_buscar_elemento(Lista *lista, void *buscado,
 	void *resultado = NULL;
 	bool encontrado = false;
 	while (nodo_actual != NULL && !encontrado) {
-		if(comparador(nodo_actual->dato, buscado) == 0){
+		if (comparador(nodo_actual->dato, buscado) == 0) {
 			resultado = nodo_actual->dato;
 			encontrado = true;
 		}
@@ -203,7 +204,7 @@ bool lista_obtener_elemento(Lista *lista, size_t posicion,
 			    void **elemento_encontrado)
 {
 	Nodo *nodo_actual = lista->principio;
-	for(int i = 0; i < posicion; i++){
+	for (int i = 0; i < posicion; i++) {
 		nodo_actual = nodo_actual->siguiente;
 	}
 	*elemento_encontrado = nodo_actual->dato;
