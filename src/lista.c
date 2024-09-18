@@ -1,8 +1,8 @@
 #include "lista.h"
 
-typedef struct {
+typedef struct nodo {
 	void *dato;
-	void *siguiente;
+	struct nodo *siguiente;
 
 } Nodo;
 
@@ -89,8 +89,8 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 		nodo_aux = nodo_actual;
 		nuevo_nodo->siguiente = nodo_aux;
 		lista->principio = nuevo_nodo;
-		resultado = true;
 		lista->cantidad++;
+		resultado = true;
 	} else if (posicion == lista->cantidad) {
 		resultado = lista_agregar_al_final(lista, cosa);
 	} else {
@@ -153,14 +153,27 @@ bool lista_quitar_elemento(Lista *lista, size_t posicion,
 		return false;
 	if (lista->cantidad == 0)
 		return false;
+	if (posicion > lista->cantidad - 1)
+		return false;
 
 	Nodo *nodo_a_borrar = NULL;
+	Nodo *nodo_actual = NULL;
 	// Nodo *nodo_aux = NULL;
 	bool resultado = false;
 	if (posicion == 0) {
 		*elemento_quitado = lista->principio->dato;
 		nodo_a_borrar = lista->principio;
 		lista->principio = lista->principio->siguiente;
+		free(nodo_a_borrar);
+		resultado = true;
+	} else {
+		nodo_actual = lista->principio;
+		for (int i = 0; i < posicion - 1; i++) {
+			nodo_actual = nodo_actual->siguiente;
+		}
+		nodo_a_borrar = nodo_actual->siguiente;
+		*elemento_quitado = nodo_a_borrar->dato;
+		nodo_actual->siguiente = nodo_a_borrar->siguiente;
 		free(nodo_a_borrar);
 		resultado = true;
 	}
@@ -223,7 +236,18 @@ bool lista_obtener_elemento(Lista *lista, size_t posicion,
 size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 			      void *ctx)
 {
-	return 0;
+	if (lista == NULL)
+		return 0;
+
+	Nodo *nodo_actual = lista->principio;
+	size_t elementos_iterados = 0;
+	bool seguir_iterando = true;
+	while (nodo_actual != NULL && seguir_iterando) {
+		seguir_iterando = f(&nodo_actual->dato, ctx);
+		nodo_actual = nodo_actual->siguiente;
+		elementos_iterados++;
+	}
+	return elementos_iterados;
 }
 
 /**
@@ -233,7 +257,9 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
  */
 Lista_iterador *lista_iterador_crear(Lista *lista)
 {
-	return NULL;
+	Lista_iterador *iterador = calloc(1, sizeof(Lista));
+	iterador->actual = lista->principio;
+	return iterador;
 }
 
 /**
@@ -241,7 +267,9 @@ Lista_iterador *lista_iterador_crear(Lista *lista)
  */
 bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 {
-	return false;
+	if (iterador == NULL)
+		return false;
+	return (iterador->actual->siguiente != NULL);
 }
 
 /**
@@ -251,6 +279,9 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
  */
 void lista_iterador_avanzar(Lista_iterador *iterador)
 {
+	if (iterador == NULL)
+		return;
+	iterador->actual = iterador->actual->siguiente;
 	return;
 }
 
@@ -259,7 +290,9 @@ void lista_iterador_avanzar(Lista_iterador *iterador)
  */
 void *lista_iterador_obtener_elemento_actual(Lista_iterador *iterador)
 {
-	return NULL;
+	if (iterador == NULL)
+		return NULL;
+	return iterador->actual->dato;
 }
 
 /**
@@ -267,5 +300,7 @@ void *lista_iterador_obtener_elemento_actual(Lista_iterador *iterador)
  */
 void lista_iterador_destruir(Lista_iterador *iterador)
 {
-	return;
+	if (iterador == NULL)
+		return;
+	free(iterador);
 }
