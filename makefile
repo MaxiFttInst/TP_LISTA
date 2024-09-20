@@ -17,7 +17,7 @@ tp_lista: src/*.c tp_lista.c
 	$(CC) $(CFLAGS) src/*.c tp_lista.c -o tp_lista
 
 formatear:
-	clang-format --style=file -i *.c src/*.c
+	clang-format --style=file -i *.c src/*.c src/*.h
 
 clean:
 	rm -f pruebas_alumno tp_lista

@@ -1,5 +1,7 @@
 #include "pa2m.h"
 #include "src/lista.h"
+#include "src/cola.h"
+#include "src/pila.h"
 #include <stdio.h>
 
 int comparador_int(void *a, void *b)
@@ -35,6 +37,10 @@ void prueba_insertar_elemento()
 	size_t cantidad_elem = lista_cantidad_elementos(lista);
 	pa2m_afirmar(cantidad_elem == 1, "Hay un elemento (%d <-> 1)",
 		     cantidad_elem);
+	bool agregado = lista_agregar_elemento(lista, 5, &algo);
+
+	pa2m_afirmar(!agregado,
+		     "No se agregó el elemento en una posición inválida");
 	lista_destruir(lista);
 }
 void prueba_quitar_elementos()
@@ -58,9 +64,10 @@ void prueba_quitar_elementos()
 						  &elem_obtenido);
 		pa2m_afirmar(obtenido, "Se obtuvo un elemento");
 		pa2m_afirmar(elem_obtenido != NULL, "Obtenido no es NULL");
-		pa2m_afirmar(*(int *)elem_obtenido == esperado_sin_un_elemento[i],
-			     "esperado %d <-> obtenido %d",
-			     esperado_sin_un_elemento[i], *(int *)elem_obtenido);
+		pa2m_afirmar(
+			*(int *)elem_obtenido == esperado_sin_un_elemento[i],
+			"esperado %d <-> obtenido %d",
+			esperado_sin_un_elemento[i], *(int *)elem_obtenido);
 	}
 	bool quitado = lista_quitar_elemento(lista, 4, &elemento_quitado);
 	pa2m_afirmar(!quitado, "La función no quitó el elemento que no existe");
@@ -71,9 +78,9 @@ void prueba_quitar_elementos()
 	pa2m_afirmar(*(int *)elemento_quitado == 2,
 		     "Se quitó el elemento del medio");
 	size_t cantidad_elem = lista_cantidad_elementos(lista);
-	pa2m_afirmar(cantidad_elem == 2, "Hay 2 elementos <-> %d", cantidad_elem);
+	pa2m_afirmar(cantidad_elem == 2, "Hay 2 elementos <-> %d",
+		     cantidad_elem);
 	lista_destruir(lista);
-
 }
 void prueba_integral_lista()
 {
@@ -158,6 +165,82 @@ void prueba_integral_lista()
 	}
 	lista_destruir(lista);
 }
+
+void prueba_crearcion_destruccion_cola()
+{
+	printf(CYAN "CREAR/DESTRUIR COLA \n");
+	Cola *cola = cola_crear();
+	pa2m_afirmar(cola != NULL, "Cola no es NULL");
+	cola_destruir(cola);
+}
+void prueba_encolar_elem_cola()
+{
+	printf(CYAN "ENCOLAR \n");
+	Cola *cola = cola_crear();
+	int encolado_y_esperado[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++) {
+		cola_encolar(cola, &encolado_y_esperado[i]);
+	}
+	pa2m_afirmar(5 == cola_cantidad(cola), "La cola tiene 5 elementos");
+	pa2m_afirmar(1 == *(int *)cola_frente(cola),
+		     "El primer elemento insertado es el primero");
+	cola_destruir(cola);
+}
+void prueba_desencolar_elem_cola()
+{
+	printf(CYAN "DESENCOLAR \n");
+	Cola *cola = cola_crear();
+	int encolado_y_esperado[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++) {
+		cola_encolar(cola, &encolado_y_esperado[i]);
+	}
+	int *quitado = NULL;
+	quitado = cola_desencolar(cola);
+	pa2m_afirmar(1 == *quitado, "Se quitó el elemento del principio");
+	pa2m_afirmar(4 == cola_cantidad(cola), "La cola tiene 4 elementos");
+	cola_destruir(cola);
+}
+void prueba_crearcion_destruccion_pila()
+{
+	printf(CYAN "CREAR/DESTRUIR COLA \n");
+	Pila *pila = pila_crear();
+	pa2m_afirmar(pila != NULL, "Cola no es NULL");
+	pila_destruir(pila);
+}
+void prueba_apilar_elem_pila()
+{
+	printf(CYAN "APILAR \n");
+	Pila *pila = pila_crear();
+	int apilado[5] = { 1, 2, 3, 4, 5 };
+	// int esperado[5] = {5,4,3,2,1};
+	for (int i = 0; i < 5; i++) {
+		pila_apilar(pila, &apilado[i]);
+	}
+	pa2m_afirmar(5 == pila_cantidad(pila), "La cola tiene 5 elementos");
+	pa2m_afirmar(5 == *(int *)pila_tope(pila),
+		     "El tope es el último insertado");
+	pila_destruir(pila);
+}
+void prueba_desapilar_elem_pila()
+{
+	printf(CYAN "DESAPILAR \n");
+	Pila *pila = pila_crear();
+	int apilado[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++) {
+		pila_apilar(pila, &apilado[i]);
+	}
+	int *desapilado = NULL;
+	for (int i = 4; i >= 0; i--) {
+		desapilado = pila_desapilar(pila);
+		pa2m_afirmar(*desapilado == apilado[i],
+			     "desapilado %d <-> esperado %d", *desapilado,
+			     apilado[i]);
+		pa2m_afirmar(i == pila_cantidad(pila),
+			     "La cola tiene %d elementos", i);
+	}
+	pa2m_afirmar(pila_esta_vacía(pila), "La pila está vacía");
+	pila_destruir(pila);
+}
 int main()
 {
 	pa2m_nuevo_grupo("============== PRUEBAS LISTA ===============");
@@ -166,6 +249,14 @@ int main()
 	prueba_insertar_elemento();
 	prueba_quitar_elementos();
 	prueba_integral_lista();
+	pa2m_nuevo_grupo("============== PRUEBAS COLA ===============");
+	prueba_crearcion_destruccion_cola();
+	prueba_encolar_elem_cola();
+	prueba_desencolar_elem_cola();
+	pa2m_nuevo_grupo("============== PRUEBAS PILA ===============");
+	prueba_crearcion_destruccion_pila();
+	prueba_apilar_elem_pila();
+	prueba_desapilar_elem_pila();
 
 	return pa2m_mostrar_reporte();
 }

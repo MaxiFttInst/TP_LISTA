@@ -1,4 +1,5 @@
 #include "lista.h"
+#include "lista_internas.h"
 
 typedef struct nodo {
 	void *dato;
@@ -80,34 +81,13 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 	if (posicion > lista->cantidad)
 		return false;
 
-	Nodo *nodo_actual = lista->principio;
-	Nodo *nodo_aux = NULL;
 	bool resultado = false;
 	if (posicion == 0 && lista->cantidad > 0) {
-		Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
-		nuevo_nodo->dato = cosa;
-		nodo_aux = nodo_actual;
-		nuevo_nodo->siguiente = nodo_aux;
-		lista->principio = nuevo_nodo;
-		lista->cantidad++;
-		resultado = true;
+		resultado = interna_agregar_al_principio(lista, cosa);
 	} else if (posicion == lista->cantidad) {
 		resultado = lista_agregar_al_final(lista, cosa);
 	} else {
-		nodo_actual = lista->principio;
-		nodo_aux = NULL;
-		Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
-		if (nuevo_nodo == NULL)
-			return false;
-		for (int i = 0; i < posicion - 1; i++) {
-			nodo_actual = nodo_actual->siguiente;
-		}
-		nodo_aux = nodo_actual->siguiente;
-		nodo_actual->siguiente = nuevo_nodo;
-		nuevo_nodo->siguiente = nodo_aux;
-		nuevo_nodo->dato = cosa;
-		lista->cantidad++;
-		resultado = true;
+		resultado = interna_agregar_en_posicion(lista, posicion, cosa);
 	}
 	return resultado;
 }
@@ -156,26 +136,13 @@ bool lista_quitar_elemento(Lista *lista, size_t posicion,
 	if (posicion > lista->cantidad - 1)
 		return false;
 
-	Nodo *nodo_a_borrar = NULL;
-	Nodo *nodo_actual = NULL;
-	// Nodo *nodo_aux = NULL;
 	bool resultado = false;
 	if (posicion == 0) {
-		*elemento_quitado = lista->principio->dato;
-		nodo_a_borrar = lista->principio;
-		lista->principio = lista->principio->siguiente;
-		free(nodo_a_borrar);
-		resultado = true;
+		resultado =
+			interna_quitar_al_principio(lista, elemento_quitado);
 	} else {
-		nodo_actual = lista->principio;
-		for (int i = 0; i < posicion - 1; i++) {
-			nodo_actual = nodo_actual->siguiente;
-		}
-		nodo_a_borrar = nodo_actual->siguiente;
-		*elemento_quitado = nodo_a_borrar->dato;
-		nodo_actual->siguiente = nodo_a_borrar->siguiente;
-		free(nodo_a_borrar);
-		resultado = true;
+		resultado = interna_quitar_en_posicion(lista, posicion,
+						       elemento_quitado);
 	}
 	lista->cantidad--;
 	return resultado;
