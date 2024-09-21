@@ -20,7 +20,7 @@ struct lista_iterador {
 Lista *lista_crear()
 {
 	Lista *nueva_lista = calloc(1, sizeof(Lista));
-	if(nueva_lista == NULL)
+	if (nueva_lista == NULL)
 		return NULL;
 	nueva_lista->cantidad = 0;
 	nueva_lista->principio = NULL;
@@ -212,7 +212,7 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 	size_t elementos_iterados = 0;
 	bool seguir_iterando = true;
 	while (nodo_actual != NULL && seguir_iterando) {
-		seguir_iterando = f(&nodo_actual->dato, ctx);
+		seguir_iterando = f(nodo_actual->dato, ctx);
 		nodo_actual = nodo_actual->siguiente;
 		elementos_iterados++;
 	}
@@ -227,7 +227,7 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 Lista_iterador *lista_iterador_crear(Lista *lista)
 {
 	Lista_iterador *iterador = calloc(1, sizeof(Lista));
-	if(iterador == NULL)
+	if (iterador == NULL)
 		return NULL;
 	iterador->actual = lista->principio;
 	return iterador;
@@ -262,6 +262,8 @@ void lista_iterador_avanzar(Lista_iterador *iterador)
 void *lista_iterador_obtener_elemento_actual(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
+		return NULL;
+	if (iterador->actual == NULL)
 		return NULL;
 	return iterador->actual->dato;
 }

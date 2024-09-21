@@ -11,7 +11,7 @@ pruebas_alumno: src/*.c pruebas_alumno.c
 	$(CC) $(CFLAGS) src/*.c pruebas_alumno.c -o pruebas_alumno
 
 valgrind-tp_lista: tp_lista
-	valgrind $(VALGRIND_FLAGS) ./tp_lista
+	valgrind $(VALGRIND_FLAGS) ./tp_lista "ejemplos/pokedex.csv"
 
 tp_lista: src/*.c tp_lista.c
 	$(CC) $(CFLAGS) src/*.c tp_lista.c -o tp_lista

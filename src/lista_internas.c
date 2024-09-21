@@ -18,7 +18,7 @@ bool interna_agregar_al_principio(Lista *lista, void *cosa)
 	Nodo *nodo_actual = lista->principio;
 	Nodo *nodo_aux = NULL;
 	Nodo *nuevo_nodo = calloc(1, sizeof(Nodo));
-	if(nuevo_nodo == NULL)
+	if (nuevo_nodo == NULL)
 		return false;
 	nuevo_nodo->dato = cosa;
 	nodo_aux = nodo_actual;
