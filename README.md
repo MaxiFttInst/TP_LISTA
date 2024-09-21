@@ -4,25 +4,23 @@
 
 # TDA LISTA
 
-# ESTO ES UN TEMPLATE, COMPLETAR LO QUE HAGA FALTA, ELIMINAR LO QUE SOBRE (INCLUIDA ESTA LÍNEA)
+## Alumno: Maximiliano Fittipaldi - 111676 - mafittipaldi@fi.uba.ar
 
-## Alumno: (Nombre Apellido) - (Padrón) - (Mail)
-
-- Para compilar:
+- Para compilar y correr todo con valgrind:
 
 ```bash
-línea de compilación
+make
 ```
 
-- Para ejecutar:
+- Para correr pruebas con valgrind:
 
 ```bash
-línea de ejecución
+make valgrind-alumno
 ```
 
-- Para ejecutar con valgrind:
+- Para correr el tp_lista (enunciado):
 ```bash
-línea con valgrind
+make valgrind-tp_lista
 ```
 
 ---
@@ -61,4 +59,56 @@ vector_original = vector;
 ---
 
 ## Respuestas a las preguntas teóricas
-Incluír acá las respuestas a las preguntas del enunciado (si aplica).
+### ¿Qué es una lista/pila/cola?
+#### Lista:
+Una lista consiste en un conjunto de nodos que se van conectando secuencialmente
+entre ellos. Cada nodo es de la forma:
+    - dato
+    - siguiente
+    - anterior
+Las listas pueden ser simplemente enlazadas (donde cada nodo solo tiene una referencia al
+siguiente) o dobles (donde cada nodo tiene referencias tanto al siguiente como al anterio
+r). Esto permite una mayor flexibilidad en la manipulación de los nodos.
+Entonces, por ejemplo, esto sería una lista válida:
+<img width="70%" src="img/lista_valida.svg">
+
+También esta es igualmente válida:
+<img width="70%" src="img/lista_doble_valida.svg">
+
+No obstante, esta implementación no sería válida:
+<img width="70%" src="img/lista_no_valida.svg">
+
+Esto se debe a que, en una lista, cada nodo se conecta secuencialmente.
+El primer nodo no puede conectarse directamente al tercero y cuarto, ya que eso conformaría otra estructura.
+#### Pila
+Una pila es una estructura del tipo FILO (First In Last Out), es decir, el primero que entra es el último que sale.
+Imaginemos que estamos apilando libros en una caja: si colocamos el libro de álgebra
+primero y luego el de análisis matemático,
+debemos quitar el de análisis para poder sacar el de álgebra.
+Las operaciones básicas son:
+
+- **push**: para agregar un elemento a la pila.
+- **pop**: para eliminar el elemento más reciente.
+#### Cola
+Una cola es como la que hacemos en el supermercado. Si llego primero, salgo primero,
+y el último en llegar va al final, abreviándolo: FIFO (First In First Out). Entonces,
+sólo puede salir el primero; una vez que salió, puede salir el segundo, y así
+sucesivamente.
+Las operaciones comunes en una cola son:
+
+- **enqueue**: para agregar un elemento al final de la cola.
+- **dequeue**: para quitar el elemento que está en el frente.
+### Explica y analiza las diferencias de complejidad entre las implementaciones de lista simplemente enlazada, doblemente enlazada y vector dinámico para las operaciones:
+#### Lista simplemente enlazada
+   - Insertar/obtener/eliminar al inicio O(1)
+   - Insertar/obtener/eliminar al final O(1)
+   - Insertar/obtener/eliminar al medio O(n)
+#### Lista doblemente enlazada
+   - Insertar/obtener/eliminar al inicio O(1)
+   - Insertar/obtener/eliminar al final O(1)
+   - Insertar/obtener/eliminar al medio O(n)
+#### Vector dinámico
+   - Insertar/obtener/eliminar al inicio O(n)
+   - Insertar/obtener/eliminar al final O(1)
+   - Insertar/obtener/eliminar al medio O(n)
+# Explica la complejidad de las operaciones implementadas en tu trabajo para la pila y la cola.

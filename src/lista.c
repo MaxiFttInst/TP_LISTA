@@ -20,6 +20,8 @@ struct lista_iterador {
 Lista *lista_crear()
 {
 	Lista *nueva_lista = calloc(1, sizeof(Lista));
+	if(nueva_lista == NULL)
+		return NULL;
 	nueva_lista->cantidad = 0;
 	nueva_lista->principio = NULL;
 	nueva_lista->final = NULL;
@@ -225,6 +227,8 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 Lista_iterador *lista_iterador_crear(Lista *lista)
 {
 	Lista_iterador *iterador = calloc(1, sizeof(Lista));
+	if(iterador == NULL)
+		return NULL;
 	iterador->actual = lista->principio;
 	return iterador;
 }
