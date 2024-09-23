@@ -165,6 +165,30 @@ void prueba_integral_lista()
 	}
 	lista_destruir(lista);
 }
+void prueba_creacion_destruccion_iterador()
+{
+	Lista *lista = lista_crear();
+	int elementos[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++)
+		lista_agregar_al_final(lista, &elementos[i]);
+	Lista_iterador *iterador = lista_iterador_crear(lista);
+	pa2m_afirmar(iterador != NULL, "Iterador no es NULL");
+	lista_iterador_destruir(iterador);
+	lista_destruir(lista);
+}
+void prueba_iterador_lista_recorrer_elem()
+{
+	Lista *lista = lista_crear();
+	int elementos[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++)
+		lista_agregar_al_final(lista, &elementos[i]);
+	Lista_iterador *iterador = lista_iterador_crear(lista);
+	while (lista_iterador_obtener_elemento_actual(iterador) != NULL) {
+		printf("%d", *(int *)lista_iterador_obtener_elemento_actual(
+				     iterador));
+		lista_iterador_avanzar(iterador);
+	}
+}
 
 void prueba_crearcion_destruccion_cola()
 {
@@ -249,6 +273,10 @@ int main()
 	prueba_insertar_elemento();
 	prueba_quitar_elementos();
 	prueba_integral_lista();
+	pa2m_nuevo_grupo(
+		"============== PRUEBAS ITERADOR LISTA ===============");
+	prueba_creacion_destruccion_iterador();
+	prueba_iterador_lista_recorrer_elem();
 	pa2m_nuevo_grupo("============== PRUEBAS COLA ===============");
 	prueba_crearcion_destruccion_cola();
 	prueba_encolar_elem_cola();
