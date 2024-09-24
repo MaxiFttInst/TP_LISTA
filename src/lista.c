@@ -189,7 +189,7 @@ void *lista_buscar_elemento(Lista *lista, void *buscado,
 bool lista_obtener_elemento(Lista *lista, size_t posicion,
 			    void **elemento_encontrado)
 {
-	if(lista == NULL)
+	if (lista == NULL)
 		return false;
 	if (posicion >= lista->cantidad)
 		return false;
@@ -236,6 +236,8 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
  */
 Lista_iterador *lista_iterador_crear(Lista *lista)
 {
+	if (lista == NULL)
+		return NULL;
 	Lista_iterador *iterador = calloc(1, sizeof(Lista));
 	if (iterador == NULL)
 		return NULL;
@@ -262,7 +264,7 @@ void lista_iterador_avanzar(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
 		return;
-	if(iterador->actual == NULL)
+	if (iterador->actual == NULL)
 		return;
 	iterador->actual = iterador->actual->siguiente;
 }
