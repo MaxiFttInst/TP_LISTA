@@ -8,6 +8,12 @@ int comparador_int(void *a, void *b)
 {
 	return *(int *)a - *(int *)b;
 }
+bool mostrar_ints(void *_dato, void *_ctx)
+{
+	int *dato = _dato;
+	printf("%d->", *dato);
+	return true;
+}
 void prueba_simple()
 {
 	int i = 14;
@@ -97,6 +103,51 @@ void prueba_quitar_elementos()
 	size_t cantidad_elem = lista_cantidad_elementos(lista);
 	pa2m_afirmar(cantidad_elem == 2, "Hay 2 elementos <-> %d",
 		     cantidad_elem);
+	lista_destruir(lista);
+}
+
+void prueba_quitar_elementos_y_agregar()
+{
+	printf(CYAN "QUITAR Y AGREGAR ELEMENTOS \n");
+	Lista *lista = lista_crear();
+	int se_espera[5] = { 1, 2, 3, 4, 5 };
+	for (int i = 0; i < 5; i++) {
+		lista_agregar_al_final(lista, &se_espera[i]);
+	}
+	void *elemento_quitado = NULL;
+	lista_quitar_elemento(lista, 2, &elemento_quitado);
+	pa2m_afirmar(*(int *)elemento_quitado == 3,
+		     "Se quitó el elemento esperado");
+	int esperado_sin_un_elemento[4] = { 1, 2, 4, 5 };
+	void *elem_obtenido = NULL;
+	bool obtenido = false;
+	for (int i = 0; i < 4; i++) {
+		obtenido = false;
+		obtenido = lista_obtener_elemento(lista, (size_t)i,
+						  &elem_obtenido);
+		pa2m_afirmar(obtenido, "Se obtuvo un elemento");
+		pa2m_afirmar(elem_obtenido != NULL, "Obtenido no es NULL");
+		pa2m_afirmar(
+			*(int *)elem_obtenido == esperado_sin_un_elemento[i],
+			"esperado %d <-> obtenido %d",
+			esperado_sin_un_elemento[i], *(int *)elem_obtenido);
+	}
+	bool quitado = lista_quitar_elemento(lista, 4, &elemento_quitado);
+	pa2m_afirmar(!quitado, "La función no quitó el elemento que no existe");
+	lista_quitar_elemento(lista, 3, &elemento_quitado);
+	pa2m_afirmar(*(int *)elemento_quitado == 5,
+		     "Se quitó el último elemento");
+	lista_quitar_elemento(lista, 1, &elemento_quitado);
+	pa2m_afirmar(*(int *)elemento_quitado == 2,
+		     "Se quitó el elemento del medio");
+	size_t cantidad_elem = lista_cantidad_elementos(lista);
+	pa2m_afirmar(cantidad_elem == 2, "Hay 2 elementos <-> %d",
+		     cantidad_elem);
+	printf("\n");
+	lista_iterar_elementos(lista, mostrar_ints, NULL);
+	printf("\n");
+	int nro_final = 5;
+	lista_agregar_al_final(lista, &nro_final);
 	lista_destruir(lista);
 }
 void prueba_integral_lista()
@@ -199,13 +250,13 @@ void prueba_iterador_lista_recorrer_elem()
 	int elementos[5] = { 1, 2, 3, 4, 5 };
 	for (int i = 0; i < 5; i++)
 		lista_agregar_al_final(lista, &elementos[i]);
-	Lista_iterador *iterador = lista_iterador_crear(lista);
-	while (lista_iterador_hay_siguiente(iterador)) {
-		printf("%d", *(int *)lista_iterador_obtener_elemento_actual(
-				     iterador));
-		lista_iterador_avanzar(iterador);
+	Lista_iterador *i;
+	for (i = lista_iterador_crear(lista); lista_iterador_hay_siguiente(i);
+	     lista_iterador_avanzar(i)) {
+		printf("%d ",
+		       *(int *)lista_iterador_obtener_elemento_actual(i));
 	}
-	lista_iterador_destruir(iterador);
+	lista_iterador_destruir(i);
 	lista_destruir(lista);
 }
 
@@ -245,7 +296,7 @@ void prueba_desencolar_elem_cola()
 }
 void prueba_crearcion_destruccion_pila()
 {
-	printf(CYAN "CREAR/DESTRUIR COLA \n");
+	printf(CYAN "CREAR/DESTRUIR PILA \n");
 	Pila *pila = pila_crear();
 	pa2m_afirmar(pila != NULL, "Cola no es NULL");
 	pila_destruir(pila);
@@ -259,7 +310,7 @@ void prueba_apilar_elem_pila()
 	for (int i = 0; i < 5; i++) {
 		pila_apilar(pila, &apilado[i]);
 	}
-	pa2m_afirmar(5 == pila_cantidad(pila), "La cola tiene 5 elementos");
+	pa2m_afirmar(5 == pila_cantidad(pila), "La pila tiene 5 elementos");
 	pa2m_afirmar(5 == *(int *)pila_tope(pila),
 		     "El tope es el último insertado");
 	pila_destruir(pila);
@@ -279,7 +330,7 @@ void prueba_desapilar_elem_pila()
 			     "desapilado %d <-> esperado %d", *desapilado,
 			     apilado[i]);
 		pa2m_afirmar(i == pila_cantidad(pila),
-			     "La cola tiene %d elementos", i);
+			     "La pila tiene %d elementos", i);
 	}
 	pa2m_afirmar(pila_esta_vacía(pila), "La pila está vacía");
 	pila_destruir(pila);
@@ -292,6 +343,7 @@ int main()
 	prueba_obtener_elemento();
 	prueba_insertar_elemento();
 	prueba_quitar_elementos();
+	prueba_quitar_elementos_y_agregar();
 	prueba_integral_lista();
 	pa2m_nuevo_grupo(
 		"============== PRUEBAS ITERADOR LISTA ===============");

@@ -72,6 +72,8 @@ bool interna_quitar_en_posicion(Lista *lista, size_t posicion,
 	nodo_a_borrar = nodo_actual->siguiente;
 	*elemento_quitado = nodo_a_borrar->dato;
 	nodo_actual->siguiente = nodo_a_borrar->siguiente;
+	if (nodo_a_borrar == lista->final)
+		lista->final = nodo_actual;
 	free(nodo_a_borrar);
 	return true;
 }

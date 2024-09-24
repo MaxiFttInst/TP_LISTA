@@ -76,8 +76,7 @@ void buscar_pokemon(Lista *pokemones, char *nombre)
 	Lista_iterador *iterador = lista_iterador_crear(pokemones);
 	struct pokemon *poke_actual = NULL;
 	bool encontrado = false;
-	while (lista_iterador_obtener_elemento_actual(iterador) != NULL &&
-	       !encontrado) {
+	while (lista_iterador_hay_siguiente(iterador) && !encontrado) {
 		poke_actual = lista_iterador_obtener_elemento_actual(iterador);
 		if (strcmp(poke_actual->nombre, nombre) == 0)
 			encontrado = true;

@@ -248,9 +248,7 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
 		return false;
-	if (iterador->actual == NULL)
-		return false;
-	return (iterador->actual->siguiente != NULL);
+	return (iterador->actual != NULL);
 }
 
 /**
@@ -261,8 +259,6 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 void lista_iterador_avanzar(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
-		return;
-	if (iterador->actual->siguiente == NULL)
 		return;
 	iterador->actual = iterador->actual->siguiente;
 	return;
