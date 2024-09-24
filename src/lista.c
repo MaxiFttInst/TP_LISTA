@@ -189,6 +189,8 @@ void *lista_buscar_elemento(Lista *lista, void *buscado,
 bool lista_obtener_elemento(Lista *lista, size_t posicion,
 			    void **elemento_encontrado)
 {
+	if(lista == NULL)
+		return false;
 	if (posicion >= lista->cantidad)
 		return false;
 	if (elemento_encontrado == NULL)
@@ -260,8 +262,9 @@ void lista_iterador_avanzar(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
 		return;
+	if(iterador->actual == NULL)
+		return;
 	iterador->actual = iterador->actual->siguiente;
-	return;
 }
 
 /**
