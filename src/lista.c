@@ -160,6 +160,10 @@ bool lista_quitar_elemento(Lista *lista, size_t posicion,
 void *lista_buscar_elemento(Lista *lista, void *buscado,
 			    int (*comparador)(void *, void *))
 {
+	if (lista == NULL)
+		return NULL;
+	if (buscado == NULL || comparador == NULL)
+		return NULL;
 	Nodo *nodo_actual = lista->principio;
 	void *resultado = NULL;
 	bool encontrado = false;
@@ -185,6 +189,10 @@ void *lista_buscar_elemento(Lista *lista, void *buscado,
 bool lista_obtener_elemento(Lista *lista, size_t posicion,
 			    void **elemento_encontrado)
 {
+	if (posicion >= lista->cantidad)
+		return false;
+	if (elemento_encontrado == NULL)
+		return true;
 	Nodo *nodo_actual = lista->principio;
 	for (int i = 0; i < posicion; i++) {
 		nodo_actual = nodo_actual->siguiente;
@@ -240,6 +248,8 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
 		return false;
+	if (iterador->actual == NULL)
+		return false;
 	return (iterador->actual->siguiente != NULL);
 }
 
@@ -251,6 +261,8 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 void lista_iterador_avanzar(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
+		return;
+	if (iterador->actual->siguiente == NULL)
 		return;
 	iterador->actual = iterador->actual->siguiente;
 	return;

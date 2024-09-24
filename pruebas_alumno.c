@@ -27,6 +27,23 @@ void prueba_destruir_lista_nula()
 	printf(CYAN "DESTRUIR LISTA NULA\n");
 	lista_destruir(NULL);
 }
+void prueba_obtener_elemento()
+{
+	printf(CYAN "OBTENER ELEMENTO \n");
+	Lista *lista = lista_crear();
+	int valor = 5;
+	lista_agregar_elemento(lista, 0, &valor);
+	bool obtenido = lista_obtener_elemento(lista, 0, NULL);
+	pa2m_afirmar(
+		obtenido,
+		"Obtener un elemento de la posicion 0 devuelve true aún cuando se pasa NULL como argumento");
+	void *nro = NULL;
+	lista_quitar_elemento(lista, 0, &nro);
+	obtenido = lista_obtener_elemento(lista, 0, &nro);
+	pa2m_afirmar(!obtenido,
+		     "Obtener un elemento de la posicion 0 devuelve false");
+	lista_destruir(lista);
+}
 void prueba_insertar_elemento()
 {
 	printf(CYAN "INSERTAR ELEMENTO \n");
@@ -183,11 +200,13 @@ void prueba_iterador_lista_recorrer_elem()
 	for (int i = 0; i < 5; i++)
 		lista_agregar_al_final(lista, &elementos[i]);
 	Lista_iterador *iterador = lista_iterador_crear(lista);
-	while (lista_iterador_obtener_elemento_actual(iterador) != NULL) {
+	while (lista_iterador_hay_siguiente(iterador)) {
 		printf("%d", *(int *)lista_iterador_obtener_elemento_actual(
 				     iterador));
 		lista_iterador_avanzar(iterador);
 	}
+	lista_iterador_destruir(iterador);
+	lista_destruir(lista);
 }
 
 void prueba_crearcion_destruccion_cola()
@@ -270,6 +289,7 @@ int main()
 	pa2m_nuevo_grupo("============== PRUEBAS LISTA ===============");
 	prueba_creacion_destruccion_lista();
 	prueba_destruir_lista_nula();
+	prueba_obtener_elemento();
 	prueba_insertar_elemento();
 	prueba_quitar_elementos();
 	prueba_integral_lista();
