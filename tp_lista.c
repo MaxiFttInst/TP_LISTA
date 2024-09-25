@@ -134,18 +134,23 @@ int main(int argc, char *argv[])
 
 	Lista *pokemones = lista_crear();
 	int opcion = 1;
+	int resultado_input = 0;
 	char nombre[100] = "";
 	cargar_pokemones_desde_csv(pokemones, argv[1]);
 	printf("Puede elegir entre: \n");
 	printf("(1) Buscar un pokemon\n");
 	printf("(2) Mostrar todos los pokemon\n");
 	printf("\n\nSu opción: ");
-	scanf("%d", &opcion);
+	resultado_input = scanf("%d", &opcion);
+	if (resultado_input != 1)
+		return -1;
+
 	switch (opcion) {
 	case 1:
 		printf("Escriba el nombre: ");
-		scanf("%s", nombre);
-		buscar_pokemon(pokemones, nombre);
+		resultado_input = scanf("%s", nombre);
+		if (resultado_input == 1)
+			buscar_pokemon(pokemones, nombre);
 		break;
 	case 2:
 		mostrar_pokemones(pokemones);
