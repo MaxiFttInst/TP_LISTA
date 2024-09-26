@@ -32,7 +32,6 @@ void pila_destruir_todo(Pila *pila, void (*f)(void *))
 	free(pila);
 }
 
-//cada una de estas funciones es O(1)
 size_t pila_cantidad(Pila *pila)
 {
 	if (pila == NULL)

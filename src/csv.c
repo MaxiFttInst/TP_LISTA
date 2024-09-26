@@ -73,9 +73,3 @@ void cerrar_archivo_csv(struct archivo_csv *archivo)
 	fclose(archivo->file);
 	free(archivo);
 }
-
-// archivo_csv
-//	- separador
-//	- FILE
-//
-//

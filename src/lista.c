@@ -33,9 +33,6 @@ void lista_destruir(Lista *lista)
 	lista_destruir_todo(lista, NULL);
 }
 
-/**
- * Destruye la lista aplicando la funcion destructora (si no es NULL) a cada elemento.
- * */
 void lista_destruir_todo(Lista *lista, void (*destructor)(void *))
 {
 	if (lista == NULL)
@@ -57,10 +54,6 @@ void lista_destruir_todo(Lista *lista, void (*destructor)(void *))
 	free(lista);
 }
 
-/*
- * Devuelve la cantidad de elementos de la lista.
- * Una lista NULL tiene 0 elementos.
- */
 size_t lista_cantidad_elementos(Lista *lista)
 {
 	if (lista == NULL)
@@ -68,14 +61,6 @@ size_t lista_cantidad_elementos(Lista *lista)
 	return lista->cantidad;
 }
 
-/**
- * Inserta un elemento en la lista en la posicion dada.
- *
- * Si la posición es mayor a la cantidad de elementos, es un error.
- *
- * Devuelve true si pudo, false en caso de error.
- *
- */
 bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 {
 	if (lista == NULL)
@@ -94,9 +79,6 @@ bool lista_agregar_elemento(Lista *lista, size_t posicion, void *cosa)
 	return resultado;
 }
 
-/**
-  * Inserta un elemento al final de la lista.
-  */
 bool lista_agregar_al_final(Lista *lista, void *cosa)
 {
 	if (lista == NULL)
@@ -121,13 +103,6 @@ bool lista_agregar_al_final(Lista *lista, void *cosa)
 	return true;
 }
 
-/**
- * Elimina un elemento de la posicion dada.
- *
- * El elemento quitado se guarda en elemento_quitado (si se puede quitar y si no es null).
- *
- * En caso de error devuelve false, caso contrario true.
- */
 bool lista_quitar_elemento(Lista *lista, size_t posicion,
 			   void **elemento_quitado)
 {
@@ -150,13 +125,6 @@ bool lista_quitar_elemento(Lista *lista, size_t posicion,
 	return resultado;
 }
 
-/**
- * Busca el elemento buscado en la lista y lo devuelve si lo encuentra.
- *
- * Para buscar el elemento, se aplica la función de comparacion.
- *
- * En caso de no encontrarlo devuelve NULL.
- */
 void *lista_buscar_elemento(Lista *lista, void *buscado,
 			    int (*comparador)(void *, void *))
 {
@@ -177,15 +145,6 @@ void *lista_buscar_elemento(Lista *lista, void *buscado,
 	return resultado;
 }
 
-/**
- * Obtiene el elemento almacenado en una posición
- *
- * Si la posicion es inválida es un error.
- *
- * El elemento encontrado se almacena en elemento_encontrado (a menos que sea NULL);
- *
- * Devuelve true si pudo obtener el elemento o false en caso de error.
- */
 bool lista_obtener_elemento(Lista *lista, size_t posicion,
 			    void **elemento_encontrado)
 {
@@ -203,15 +162,6 @@ bool lista_obtener_elemento(Lista *lista, size_t posicion,
 	return true;
 }
 
-/**
- * Recorre la lista aplicando la funcion f a cada elemento en orden.
- *
- * ctx se le pasa como segundo parámetro a f.
- *
- * Si la funcion devuelve true se debe seguir iterando, caso contrario no.
- *
- * Devuelve la cantidad de elementos iterados.
- * */
 size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 			      void *ctx)
 {
@@ -229,11 +179,6 @@ size_t lista_iterar_elementos(Lista *lista, bool (*f)(void *, void *),
 	return elementos_iterados;
 }
 
-/**
- * Crea un iterador externo para una lista
- *
- * En caso de error devuelve NULL
- */
 Lista_iterador *lista_iterador_crear(Lista *lista)
 {
 	if (lista == NULL)
@@ -245,9 +190,6 @@ Lista_iterador *lista_iterador_crear(Lista *lista)
 	return iterador;
 }
 
-/**
- * Devuelve true si hay siguiente.
- */
 bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
@@ -255,11 +197,6 @@ bool lista_iterador_hay_siguiente(Lista_iterador *iterador)
 	return (iterador->actual != NULL);
 }
 
-/**
- *
- * Hace que el iterador avance al siguiente elemento de la lista.
- *
- */
 void lista_iterador_avanzar(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
@@ -269,9 +206,6 @@ void lista_iterador_avanzar(Lista_iterador *iterador)
 	iterador->actual = iterador->actual->siguiente;
 }
 
-/**
- * Devuelve el elemento iterado
- */
 void *lista_iterador_obtener_elemento_actual(Lista_iterador *iterador)
 {
 	if (iterador == NULL)
@@ -281,9 +215,6 @@ void *lista_iterador_obtener_elemento_actual(Lista_iterador *iterador)
 	return iterador->actual->dato;
 }
 
-/**
- * Eso
- */
 void lista_iterador_destruir(Lista_iterador *iterador)
 {
 	if (iterador == NULL)

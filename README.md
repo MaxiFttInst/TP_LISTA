@@ -63,12 +63,13 @@ vector_original = vector;
 #### Lista:
 Una lista consiste en un conjunto de nodos que se van conectando secuencialmente
 entre ellos. Cada nodo es de la forma:
-    - dato
-    - siguiente
-    - anterior
+   - dato
+   - siguiente
+   - anterior
+
 Las listas pueden ser simplemente enlazadas (donde cada nodo solo tiene una referencia al
-siguiente) o dobles (donde cada nodo tiene referencias tanto al siguiente como al anterio
-r). Esto permite una mayor flexibilidad en la manipulación de los nodos.
+siguiente) o dobles (donde cada nodo tiene referencias tanto al siguiente como al anterior)
+. Esto permite una mayor flexibilidad en la manipulación de los nodos.
 Entonces, por ejemplo, esto sería una lista válida:
 <img width="70%" src="img/lista_valida.svg">
 
@@ -100,15 +101,30 @@ Las operaciones comunes en una cola son:
 - **dequeue**: para quitar el elemento que está en el frente.
 ### Explica y analiza las diferencias de complejidad entre las implementaciones de lista simplemente enlazada, doblemente enlazada y vector dinámico para las operaciones:
 #### Lista simplemente enlazada
-   - Insertar/obtener/eliminar al inicio O(1)
-   - Insertar/obtener/eliminar al final O(1)
-   - Insertar/obtener/eliminar al medio O(n)
+   - **Insertar/obtener/eliminar al inicio O(1)**: La complejidad en este caso es O(1) porque sólo basta con insertar un nodo en el inicio y,
+      el que antes era el nodo inicial pase a ser el siguiente del nuevo nodo.
+   - **Insertar/obtener/eliminar al final O(1)**: Dado que debemos insertar un nodo al final  y tenemos una referencia del final
+      en nuestra estructura, podemos ir al final e insertar nuestro nuevo nodo. Por este motivo, la complejidad es O(1) (aunque
+      si no tuviéramos el puntero indicando el final, la complejidad sería O(n))
+   - **Insertar/obtener/eliminar al medio O(n)**: Debemos recorrer la lista para insertar en la posición deseada, por ende, la complejidad
+      es O(1).
 #### Lista doblemente enlazada
-   - Insertar/obtener/eliminar al inicio O(1)
-   - Insertar/obtener/eliminar al final O(1)
-   - Insertar/obtener/eliminar al medio O(n)
+   - **Insertar/obtener/eliminar al inicio O(1)**: En este punto, es igual a la LSE (lista simplemente enlazada).
+   - **Insertar/obtener/eliminar al final O(1)**: También aquí, este punto es equivalente en la LSE.
+   - **Insertar/obtener/eliminar al medio O(n)**: Al igual que en la LSE, la complejidad es la misma. **NO OBSTANTE**, esta estructura
+      nos ofrece la posibilidad de ir hacia atrás, por ende, si queremos hacer una inserción/obtención/eliminación más rápida de algún
+      elemento, podríamos establecer en nuestra estructura, por ejemplo, un puntero que indique al nodo que está en el medio del arreglo
+      y, calculando las distancias para determinar si es conveniente, podríamos empezar a iterar en el medio, en vez en el principio. Entonces,
+      por ejemplo, si nuestra lista tiene 10 elementos y el usuario pide el que está en la 4ta posición, podemos empezar por el medio (5ta 
+      posición) y luego ir hacia atrás.
 #### Vector dinámico
-   - Insertar/obtener/eliminar al inicio O(n)
-   - Insertar/obtener/eliminar al final O(1)
-   - Insertar/obtener/eliminar al medio O(n)
+   - **Insertar/obtener/eliminar al inicio (O(n)/O(1)/O(n))**: En los casos de inserción y eliminación,
+      debemos desplazar todos los elementos el arreglo, por este motivo, la complejidad es O(n). No obstante,
+      en un vector dinámico podemos obtener el elemento con su índice, por ende su complejidad es O(1).
+   - **Insertar/obtener/eliminar al final (O(1))**: No requerimos recorrer todo el vector ni desplazar sus elementos, sólo debemos
+      redimencionar el vector y agregar en caso de inserción o indicar el índice del elemento para obtenerlo. En cuanto a la eliminación,
+      tampoco debemos desplazar ningún elemento, porque no tiene siguiente. Por estos motivos, todas estas operaciones son O(1)
+   - **Insertar/obtener/eliminar al medio (O(n)/O(1)/O(n))**: Tanto para la inserción como para la eliminación, requerimos desplazar los *n*
+      elementos que hayan adelante, por eso la complejidad corresponde a O(n). Para obtener el elemento, la complejidad es O(1) por
+      los mismos motivos explicados anteriormente.
 # Explica la complejidad de las operaciones implementadas en tu trabajo para la pila y la cola.

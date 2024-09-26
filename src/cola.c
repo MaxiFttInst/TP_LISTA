@@ -28,7 +28,6 @@ void cola_destruir_todo(Cola *cola, void (*f)(void *))
 	free(cola);
 }
 
-//cada una de estas funciones es O(1)
 size_t cola_cantidad(Cola *cola)
 {
 	if (cola == NULL)
