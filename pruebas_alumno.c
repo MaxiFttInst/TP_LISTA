@@ -8,12 +8,6 @@ int comparador_int(void *a, void *b)
 {
 	return *(int *)a - *(int *)b;
 }
-bool mostrar_ints(void *_dato, void *_ctx)
-{
-	int *dato = _dato;
-	printf("%d->", *dato);
-	return true;
-}
 void prueba_simple()
 {
 	int i = 14;
@@ -143,9 +137,6 @@ void prueba_quitar_elementos_y_agregar()
 	size_t cantidad_elem = lista_cantidad_elementos(lista);
 	pa2m_afirmar(cantidad_elem == 2, "Hay 2 elementos <-> %d",
 		     cantidad_elem);
-	printf("\n");
-	lista_iterar_elementos(lista, mostrar_ints, NULL);
-	printf("\n");
 	int nro_final = 5;
 	lista_agregar_al_final(lista, &nro_final);
 	lista_destruir(lista);

@@ -1,69 +1,43 @@
 #include "pila.h"
 #include "lista.h"
 
-#include <stdlib.h>
-#include <stdbool.h>
-
-struct pila {
-	Lista *lista;
-};
+typedef Lista pila;
 
 Pila *pila_crear()
 {
-	Pila *nueva_pila = calloc(1, sizeof(Pila));
-	if (nueva_pila == NULL)
-		return NULL;
-	nueva_pila->lista = lista_crear();
-	return nueva_pila;
+	return (Pila *)lista_crear();
 }
 void pila_destruir(Pila *pila)
 {
-	if (pila == NULL)
-		return;
-	lista_destruir(pila->lista);
-	free(pila);
+	lista_destruir((Lista *)pila);
 }
 
 void pila_destruir_todo(Pila *pila, void (*f)(void *))
 {
-	if (pila == NULL)
-		return;
-	lista_destruir_todo(pila->lista, f);
-	free(pila);
+	lista_destruir_todo((Lista *)pila, f);
 }
 
 size_t pila_cantidad(Pila *pila)
 {
-	if (pila == NULL)
-		return 0;
-	return lista_cantidad_elementos(pila->lista);
+	return lista_cantidad_elementos((Lista *)pila);
 }
 void *pila_tope(Pila *pila)
 {
-	if (pila == NULL)
-		return 0;
 	void *elemento_encontrado = NULL;
-	lista_obtener_elemento(pila->lista, 0, &elemento_encontrado);
+	lista_obtener_elemento((Lista *)pila, 0, &elemento_encontrado);
 	return elemento_encontrado;
 }
 bool pila_apilar(Pila *pila, void *cosa)
 {
-	if (pila == NULL)
-		return 0;
-	lista_agregar_elemento(pila->lista, 0, cosa);
-	return true;
+	return lista_agregar_elemento((Lista *)pila, 0, cosa);
 }
 void *pila_desapilar(Pila *pila)
 {
-	if (pila == NULL)
-		return 0;
 	void *elemento_quitado = NULL;
-	lista_quitar_elemento(pila->lista, 0, &elemento_quitado);
+	lista_quitar_elemento((Lista *)pila, 0, &elemento_quitado);
 	return elemento_quitado;
 }
 bool pila_esta_vacía(Pila *pila)
 {
-	if (pila == NULL)
-		return 0;
-	return lista_cantidad_elementos(pila->lista) == 0;
+	return lista_cantidad_elementos((Lista *)pila) == 0;
 }

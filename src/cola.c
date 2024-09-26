@@ -1,65 +1,42 @@
 #include "cola.h"
 #include "lista.h"
 
-struct cola {
-	Lista *lista;
-};
+typedef Lista cola;
 
 Cola *cola_crear()
 {
-	Cola *nueva_cola = calloc(1, sizeof(Cola));
-	if (nueva_cola == NULL)
-		return NULL;
-	nueva_cola->lista = lista_crear();
-	return nueva_cola;
+	return (Cola *)lista_crear();
 }
 void cola_destruir(Cola *cola)
 {
-	if (cola == NULL)
-		return;
-	lista_destruir(cola->lista);
-	free(cola);
+	lista_destruir((Lista *)cola);
 }
 void cola_destruir_todo(Cola *cola, void (*f)(void *))
 {
-	if (cola == NULL)
-		return;
-	lista_destruir_todo(cola->lista, f);
-	free(cola);
+	lista_destruir_todo((Lista *)cola, f);
 }
 
 size_t cola_cantidad(Cola *cola)
 {
-	if (cola == NULL)
-		return 0;
-	return lista_cantidad_elementos(cola->lista);
+	return lista_cantidad_elementos((Lista *)cola);
 }
 void *cola_frente(Cola *cola)
 {
-	if (cola == NULL)
-		return 0;
 	void *elemento_encontrado = NULL;
-	lista_obtener_elemento(cola->lista, 0, &elemento_encontrado);
+	lista_obtener_elemento((Lista *)cola, 0, &elemento_encontrado);
 	return elemento_encontrado;
 }
 bool cola_encolar(Cola *cola, void *cosa)
 {
-	if (cola == NULL)
-		return 0;
-	lista_agregar_al_final(cola->lista, cosa);
-	return true;
+	return lista_agregar_al_final((Lista *)cola, cosa);
 }
 void *cola_desencolar(Cola *cola)
 {
-	if (cola == NULL)
-		return 0;
 	void *elemento_quitado = NULL;
-	lista_quitar_elemento(cola->lista, 0, &elemento_quitado);
+	lista_quitar_elemento((Lista *)cola, 0, &elemento_quitado);
 	return elemento_quitado;
 }
 bool cola_esta_vacía(Cola *cola)
 {
-	if (cola == NULL)
-		return 0;
-	return lista_cantidad_elementos(cola->lista) == 0;
+	return lista_cantidad_elementos((Lista *)cola) == 0;
 }
