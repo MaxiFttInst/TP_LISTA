@@ -109,6 +109,15 @@ void mostrar_pokemones(Lista *pokemones)
 {
 	lista_iterar_elementos(pokemones, mostrar_pokemon, NULL);
 }
+void mostrar_titulo()
+{
+	printf("______ _____ _   __ ________  ________ _   _ \n"
+	       "| ___ \\  _  | | / /|  ___|  \\/  |  _  | \\ | |\n"
+	       "| |_/ / | | | |/ / | |__ | .  . | | | |  \\| |\n"
+	       "|  __/| | | |    \\ |  __|| |\\/| | | | | . ` |\n"
+	       "| |   \\ \\_/ / |\\  \\| |___| |  | \\ \\_/ / |\\  |\n"
+	       "\\_|    \\___/\\_| \\_/\\____/\\_|  |_/\\___/\\_| \\_/ \n");
+}
 int main(int argc, char *argv[])
 {
 	//recibir un archivo por linea de comandos
@@ -125,12 +134,7 @@ int main(int argc, char *argv[])
 		printf("Ingrese algún argumento válido\n");
 		return -1;
 	}
-	printf("______ _____ _   __ ________  ________ _   _ \n"
-	       "| ___ \\  _  | | / /|  ___|  \\/  |  _  | \\ | |\n"
-	       "| |_/ / | | | |/ / | |__ | .  . | | | |  \\| |\n"
-	       "|  __/| | | |    \\ |  __|| |\\/| | | | | . ` |\n"
-	       "| |   \\ \\_/ / |\\  \\| |___| |  | \\ \\_/ / |\\  |\n"
-	       "\\_|    \\___/\\_| \\_/\\____/\\_|  |_/\\___/\\_| \\_/ \n");
+	mostrar_titulo();
 
 	Lista *pokemones = lista_crear();
 	int opcion = 1;
@@ -142,8 +146,10 @@ int main(int argc, char *argv[])
 	printf("(2) Mostrar todos los pokemon\n");
 	printf("\n\nSu opción: ");
 	resultado_input = scanf("%d", &opcion);
-	if (resultado_input != 1)
+	if (resultado_input != 1) {
+		lista_destruir_todo(pokemones, liberar_dato);
 		return -1;
+	}
 
 	switch (opcion) {
 	case 1:
