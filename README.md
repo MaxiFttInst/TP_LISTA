@@ -26,9 +26,14 @@ make valgrind-tp_lista
 ---
 
 ##  Funcionamiento
-Lo que más vale la pena es desarrollar la explicación de la lista, porque la lista
-y la cola son casi como un "alias" de la lista con métodos más restringidos. Además,
-esas estructuras se explicarán más adelante.
+Lo que más vale la pena es desarrollar la explicación de la lista, porque la pila
+y la cola son como un "alias" de los métodos de la lista, pero más
+restringidos para que respeten la propia estructura.
+Además, esas estructuras se explicarán más adelante.
+
+Como nota a parte, hay que resaltar que en el código hay un apartado de
+**funciones internas**: estas se encargan de ciertos casos comunes para
+modularizar más el código y, de esa manera, este se explique más "por sí solo".
 
 ### lista_crear
 La función `lista_crear` se encarga de crear una nueva lista. Esta operación
@@ -152,7 +157,11 @@ debemos quitar el de análisis para poder sacar el de álgebra.
 Las operaciones básicas son:
 
 - **push**: para agregar un elemento a la pila.
+<img width="90%" src="img/pila_push.svg">
+
 - **pop**: para eliminar el elemento más reciente.
+<img width="90%" src="img/pila_pop.svg">
+
 #### Cola
 Una cola es como la que hacemos en el supermercado. Si llego primero, salgo primero,
 y el último en llegar va al final, abreviándolo: FIFO (First In First Out). Entonces,
@@ -161,7 +170,11 @@ sucesivamente.
 Las operaciones comunes en una cola son:
 
 - **enqueue**: para agregar un elemento al final de la cola.
+<img width="90%" src="img/cola_enqueue.svg">
+
 - **dequeue**: para quitar el elemento que está en el frente.
+<img width="90%" src="img/cola_dequeue.svg">
+
 ### Explica y analiza las diferencias de complejidad entre las implementaciones de lista simplemente enlazada, doblemente enlazada y vector dinámico para las operaciones:
 #### Lista simplemente enlazada
    - **Insertar/obtener/eliminar al inicio O(1)**: La complejidad en este caso es O(1) porque sólo basta con insertar un nodo en el inicio y,

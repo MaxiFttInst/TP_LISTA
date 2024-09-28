@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" version="24.7.16">
+  <diagram name="Page-1" id="UoyIot3PldLbkfe9Mu72">
+    <mxGraphModel dx="989" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-1" value="dato 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;sketch=1;curveFitting=1;jiggle=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="240" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-2" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="320" as="sourcePoint" />
+            <mxPoint x="360" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-3" value="dato 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="200" y="240" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-4" value="dato 2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;sketch=1;curveFitting=1;jiggle=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="200" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-5" value="dato 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="380" y="240" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-7" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="320" as="sourcePoint" />
+            <mxPoint x="540" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-8" value="dato 3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;glass=0;shadow=0;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+          <mxGeometry x="200" y="170" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-9" value="dato 2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="210" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Yy2xcEP5WIJigC7jEEHn-10" value="( La pila está vacía)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="280" width="140" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
