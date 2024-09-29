@@ -267,7 +267,7 @@ No hay necesidad de recorrer la cola, así que la complejidad es constante.
 
 ### cola_encolar
 Cuando encolamos un elemento, siempre lo añadimos al final de la cola.
-Aplicando la implementación adecuada, no necesitamos mover otros elementos;
+Aplicando adecuadamente la implementación, no necesitamos mover otros elementos;
 simplemente agregamos el nuevo elemento. Por lo tanto, la complejidad es O(1).
 
 ### cola_desencolar
@@ -275,5 +275,5 @@ Al desencolar, eliminamos el elemento que está al frente de la cola. Similar a 
 directamente al primer elemento y ajustando los punteros. Por lo tanto, la complejidad es O(1).
 
 ### cola_esta_vacia
-Para verificar si la cola está vacía, simplemente revisamos el contador de elementos o el estado del puntero del frente.
+Para verificar si la cola está vacía, simplemente revisamos el contador de elementos.
 Dado que esta operación no requiere recorrer la cola, la complejidad es O(1).
