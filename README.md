@@ -53,6 +53,11 @@ Similar a `lista_destruir`, esta función también recorre cada nodo de la lista
 para liberarlo. Si se proporciona un destructor para liberar los datos, este
 también se ejecutará en cada iteración. Por tanto, su complejidad es O(n).
 
+Primero destruimos el dato que contiene el nodo (1) y luego liberamos
+la memoria del nodo (2). Después procedemos con el siguiente nodo, y así
+sucesivamente hasta que se hayan liberado todos.
+<img width="130%" src="img/heap_stack_lista_destruir_todo.svg">
+
 ### lista_cantidad_elementos
 La función `lista_cantidad_elementos` simplemente accede al contador que
 almacena la cantidad de elementos en la lista. Dado que no se realizan cálculos
@@ -63,14 +68,26 @@ La complejidad de agregar un elemento a la lista varía según la posición:
 - Si se agrega al principio o al final, es una operación constante, O(1), ya
    que solo se ajustan algunos punteros.
 - Sin embargo, si se desea insertar en una posición intermedia, la función debe
-   recorrer la lista hasta llegar a esa posición, lo que puede llevar hasta O(n)
-   en el peor de los casos. Por lo tanto, la complejidad general de esta operación
-   es O(n).
+   recorrer la lista hasta llegar al nodo previo a esa posición (ver diagrama),
+   lo que puede llevar hasta O(n) en el peor de los casos. Por lo tanto, la
+   complejidad general de esta operación es O(n).
+
+En pocas palabras, nos guardamos el puntero al siguente nodo del primer nodo,
+anidamos el nuevo y le asignamos al nuevo nodo su siguente, es decir, el
+puntero que nos guardamos (En el programa está como nodo_aux).
+<img width="130%" src="img/heap_stack_lista_agregar_al_medio.svg">
+
+Aquí el diagrama del caso de agregar al principio (también usamos un nodo auxiliar
+para guardar el antiguo nodo inicial, así luego podemos anidarlo):
+<img width="130%" src="img/heap_stack_lista_agregar_al_principio.svg">
 
 ### lista_agregar_al_final
 Agregar un elemento al final de la lista sólo requiere de anidar el nuevo nodo
-con el último.
+con el último. Esta función también se usa en el caso de que la lista esté vacía.
 Esto da como resultado una complejidad constante, O(1).
+
+<img width="130%" src="img/heap_stack_lista_agregar_al_final.svg">
+(Las líneas punteadas representan lo que apuntaba anteriormente el puntero final)
 
 ### lista_quitar_elemento
 La complejidad para quitar un elemento depende de la posición:
@@ -78,6 +95,8 @@ La complejidad para quitar un elemento depende de la posición:
 - Si se quita del medio o del final, es necesario recorrer la lista hasta esa
    posición, lo que puede llevar hasta O(n). Por lo tanto, la complejidad general
    es O(n).
+
+Es muy similar a **lista_agregar_elemento**, sólo que es el proceso inverso.
 
 ### lista_buscar_elemento
 Buscar un elemento en la lista implica recorrerla desde el principio hasta
@@ -192,7 +211,7 @@ Las operaciones comunes en una cola son:
       elemento, podríamos establecer en nuestra estructura, por ejemplo, un puntero que indique al nodo que está en el medio del arreglo
       y, calculando las distancias para determinar si es conveniente, podríamos empezar a iterar en el medio, en vez en el principio. Entonces,
       por ejemplo, si nuestra lista tiene 10 elementos y el usuario pide el que está en la 4ta posición, podemos empezar por el medio (5ta 
-      posición) y luego ir hacia atrás.
+      posición) y luego ir hacia atrás. Esto no cambia la complejidad, pero da lugar a optimizaciones.
 #### Vector dinámico
    - **Insertar/obtener/eliminar al inicio (O(n)/O(1)/O(n))**: En los casos de inserción y eliminación,
       debemos desplazar todos los elementos el arreglo, por este motivo, la complejidad es O(n). No obstante,
